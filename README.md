@@ -52,3 +52,4 @@ bin/console cache:clear
 
 En config/packages/asset.yaml comentar json_manifest_path
 
+composer require friendsofsymfony/user-bundle "~2.1"

@@ -1,6 +1,5 @@
 <?php
 namespace App\Controller\Admin;
-
 use App\Entity\Category;
 use App\Form\Admin\CategoryType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -8,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-
 class CategoryController extends AbstractController
 {
     /**
@@ -23,12 +21,10 @@ class CategoryController extends AbstractController
     public function list(EntityManagerInterface $em) : Response
     {
         $categories = $em->getRepository(Category::class)->findAll();
-
         return $this->render('admin/category/list.html.twig', [
             'categories' => $categories,
         ]);
     }
-
     /**
      * Create category.
      *
@@ -53,7 +49,6 @@ class CategoryController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * Edit category.
      *
@@ -69,19 +64,15 @@ class CategoryController extends AbstractController
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-
             return $this->redirectToRoute('admin.category.list');
         }
-
         return $this->render('admin/category/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * Delete category.
      *
@@ -99,7 +90,6 @@ class CategoryController extends AbstractController
             $em->remove($category);
             $em->flush();
         }
-
         return $this->redirectToRoute('admin.category.list');
     }
 }

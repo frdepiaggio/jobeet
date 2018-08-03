@@ -1,16 +1,13 @@
 <?php
 namespace App\Controller\Admin;
-
 use App\Entity\Job;
 use App\Form\JobType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-
-
 class JobController extends AbstractController
 {
     /**
@@ -40,12 +37,10 @@ class JobController extends AbstractController
                 PaginatorInterface::DEFAULT_SORT_DIRECTION => 'DESC',
             ]
         );
-
         return $this->render('admin/job/list.html.twig', [
             'jobs' => $jobs,
         ]);
     }
-
     /**
      * Create job.
      *
@@ -61,19 +56,15 @@ class JobController extends AbstractController
         $job = new Job();
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($job);
             $em->flush();
-
             return $this->redirectToRoute('admin.job.list');
         }
-
         return $this->render('admin/job/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * Edit job.
      *
@@ -89,18 +80,14 @@ class JobController extends AbstractController
     {
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-
             return $this->redirectToRoute('admin.job.list');
         }
-
         return $this->render('admin/job/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * Delete job.
      *
